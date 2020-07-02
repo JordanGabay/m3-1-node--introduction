@@ -1,6 +1,7 @@
 const messageInput = document.querySelector('#user-input');
 const conversationElem = document.querySelector('#conversation-container');
 
+
 // focus the input on load
 const handleFocus = () => {
   messageInput.focus();
@@ -26,12 +27,12 @@ const sendMessage = (event) => {
   const message = { author: 'user', text: messageInput.value };
   updateConversation(message);
 
-  fetch('/bot-message')
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      updateConversation(data.message);
-    });
+fetch(`/bot-message/?msg=${message.text}`)
+.then((res) => res.json())
+.then((data) => {
+  console.log(data.message.text);
+  updateConversation(data.message);
+});
 };
 
 // call handleFocus on load
