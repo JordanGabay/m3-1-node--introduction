@@ -3,6 +3,7 @@
 // import the needed node_modules.
 const express = require('express');
 const morgan = require('morgan');
+const { text } = require('express');
 
 express()
   // Below are methods that are included in express(). We chain them for convenience.
@@ -55,11 +56,19 @@ express()
 
     const getBotMessage = (text) => {
       const commonGreetings = ['hi', 'hello', 'howdy'];
+      const commonGoodbyes = ['bye', 'goodbye', 'later'];
+      
       let botGreeting = '';
       
-      if(text.toLowerCase().startsWith('goodbye'))
-      botGreeting = 'goodbye!'
-      else
+      // if(text.toLowerCase().startsWith('goodbye'))
+      // botGreeting = 'goodbye!'
+      // else
+
+      commonGoodbyes.forEach((goodbye) => {
+        if(text.toLowerCase().includes(goodbye)){
+          botGreeting = 'goodbye!'
+        }
+      })
       commonGreetings.forEach(greeting => {
         if(text.toLowerCase().startsWith(greeting))
         botGreeting = 'hello!'
@@ -67,6 +76,7 @@ express()
       return botGreeting;
     };
 
+  
     const greeting = req.query.msg;
 
     let botGreeting = getBotMessage(greeting);
@@ -86,7 +96,6 @@ express()
     }, randomTime);
     console.log(req.query.msg)
   })
-  
   // add new endpoints here ☝️
   // ---------------------------------
   // Nothing to modify below this line
